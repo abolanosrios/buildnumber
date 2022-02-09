@@ -20,4 +20,4 @@ runs:
         $AppVersionStringOverlappedAndPadded="${{ env.MAYOR_VERSION }}$DaysSinceEpoch$MinutesSinceMidnightFourDigits"
           
         ./update-ios-app-version-pscore.ps1 -PathToInfoPlist ${{inputs.plist}} -BundleShortVersion $AppVersionNumericSeparatedByDots -BundleVersion $AppVersionStringOverlappedAndPadded
-      shell: pwsh
+      shell: bash
