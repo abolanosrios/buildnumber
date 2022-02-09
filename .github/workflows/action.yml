@@ -1,7 +1,0 @@
-  name: 'Build version'
-  description: 'Build version description'
-  branding:
-    icon: 'arrow-up-circle'
-    color: 'green'
-  inputs:
-    
