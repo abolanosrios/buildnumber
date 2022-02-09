@@ -1,0 +1,23 @@
+name: 'Build version'
+description: 'Build version description'
+branding:
+  icon: 'arrow-up-circle'  
+  color: 'green'
+inputs:
+  plist:
+    description: 'Plist description'
+    required: true
+runs:
+  using: 'composite'
+  image: 'Dockerfile'
+  steps:
+    - run: |
+        $TimestampEpoch=Get-Date -Date '2020-01-01'
+        $DaysSinceEpoch=(New-TimeSpan -Start $TimestampEpoch -End $(Get-Date)).Days
+        $MinutesSinceMidnight=[int] (New-TimeSpan -Start $(Get-Date -Hour 0 -Minute 00 -Second 00) -End $(Get-Date)).TotalMinutes
+        $MinutesSinceMidnightFourDigits=([string]$MinutesSinceMidnight).PadLeft(4,'0')
+        $AppVersionNumericSeparatedByDots="${{ env.MAYOR_VERSION }}.$DaysSinceEpoch.$MinutesSinceMidnight"
+        $AppVersionStringOverlappedAndPadded="${{ env.MAYOR_VERSION }}$DaysSinceEpoch$MinutesSinceMidnightFourDigits"
+          
+        ./update-ios-app-version-pscore.ps1 -PathToInfoPlist ${{inputs.plist}} -BundleShortVersion $AppVersionNumericSeparatedByDots -BundleVersion $AppVersionStringOverlappedAndPadded
+      shell: pwsh
