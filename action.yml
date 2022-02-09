@@ -9,7 +9,6 @@ inputs:
     required: true
 runs:
   using: 'composite'
-  image: 'Dockerfile'
   steps:
     - run: |
         $TimestampEpoch=Get-Date -Date '2020-01-01'
